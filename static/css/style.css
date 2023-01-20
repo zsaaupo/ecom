@@ -1,0 +1,48 @@
+*{padding: 0; margin: auto}
+
+/*start of hear css*/
+
+.menu ul li{
+	position: relative;
+	display: inline-block;
+	padding: 20px;
+}
+
+.menu ul li a{
+	text-decoration: none;
+	color: black;
+	font-size: 20px;
+}
+
+.menu{
+	text-align: right;
+	float: right;
+}
+
+.headline{
+	font-family: Curlz MT;
+	font-size: 18px;
+	float: left;
+	display: inline-block;
+	margin-left: 60px;
+	margin-top: 20px;
+}
+
+/*end of hear css*/
+
+
+/*text decoration for all <a> tag*/
+a{
+	text-decoration: none;
+	color: black;
+}
+/* end of text decoration for all <a> tag*/
+
+/*start of footer css*/
+
+.footer {
+    position: absolute;
+    bottom: 0;
+}
+
+/*end of footer css*/

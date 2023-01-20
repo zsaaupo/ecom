@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>{% block title %}Base{% endblock %}</title>
+</head>
+<body>
+{% include 'layout/header.html' %}
+<!-- break div -->
+<div>
+    <br>
+</div>
+{% block body %}
+{% endblock %}
+{% include 'layout/footer.html' %}
+</body>
+</html>

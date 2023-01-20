@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Landing_page',
+    'Customer',
 ]
 
 MIDDLEWARE = [

@@ -4,8 +4,8 @@
 <div class="container">
     <div class="card">
         <h1 class="card_title">Join Mushromyan</h1>
-        <form class="card_form" method="POST">
-        	{% csrf_token %}
+        <form enctype="multipart/form-data" id="sign_up_form" class="card_form" method="POST">
+            {% csrf_token %}
             <div class="input">
                 <input type="text" id="full_name" name="full_name" class="input_field" required />
                 <label for="full_name" class="input_label">Full name</label>
@@ -15,14 +15,10 @@
                 <label for="phone_number" class="input_label">Phone Number</label>
             </div>
             <div class="input">
-                <input type="password" id="password" name="password" class="input_field" required />
+                <input type="text" id="password" name="password" class="input_field" required />
                 <label for="password" class="input_label">Password</label>
             </div>
-            <div class="input">
-                <input type="password" id="password1" name="password1" class="input_field" required />
-                <label for="password1" class="input_label">Confirm Password</label>
-            </div>
-            <button type="submit" class="card_button">Sign Up</button>
+            <input type="submit" value="Sign Up" class="card_button"></input>
         </form>
         <div class="card_info">
             <p>Have a account? <a id="redirect" href="#">Log In</a></p>
@@ -188,4 +184,33 @@
     </svg>
 
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#sign_up_form").submit(function(e){
+            e.preventDefault();
+            var full_name = $("#full_name").val();
+            var phone_number = $("#phone_number").val();
+            var password = $("#password").val();
+            $.ajax({
+                type: "POST",
+                url: "/user/sign_up_api/",
+                data: JSON.stringify({'full_name': full_name, 'phone_number': phone_number, 'password': password}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response){
+                    if(response.status == 202){
+                        alert(response.massage);
+                        window.location.href = '/';
+                    }else{
+                        alert(response.massage);
+                    }
+                },
+                failure: function(response){
+                    alert("Error occured while signing up. Please try again later.");
+                }
+            });
+        });
+    });
+    </script>
 {% endblock %}

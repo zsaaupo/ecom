@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'Landing_page',
     'Customer',
+    'django_twilio',
 ]
 
 MIDDLEWARE = [

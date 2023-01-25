@@ -4,6 +4,7 @@ from .models import Customer
 class CustomerAdmin(admin.ModelAdmin):
 
     list_display = [
+        "user",
         "full_name",
         "phone_number"
     ]

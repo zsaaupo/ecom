@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.utils import json
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED, HTTP_226_IM_USED, HTTP_406_NOT_ACCEPTABLE
 import random
+from threading import Thread
+from twilio.rest import Client
 
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
@@ -56,6 +58,8 @@ class ApiSingUp(CreateAPIView):
                 customer.otp = random_number
                 customer.save()
 
+                thread_send_otp(data['phone_number'], random_number)
+
                 result['status'] = HTTP_202_ACCEPTED
                 result['massage'] = "Success"
                 result['phone_number'] = data['phone_number']
@@ -69,6 +73,24 @@ class ApiSingUp(CreateAPIView):
             result['message'] = str(ex)
             return Response(result)
 
+def send_otp(phone_number, otp):
+    bd_number = "+88"+phone_number
+    account_sid = 'ACa28db228afc04d77f2d594c828f0514e'
+    auth_token = '31392d0e47d75c67ba189fea473e7642'
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        messaging_service_sid='MGbc2f75ec5120f89401f2569562b535b3',
+        body=otp,
+        to=bd_number
+    )
+
+    print(message.sid)
+
+
+def thread_send_otp(phone_number, otp):
+    thread = Thread(target=send_otp, args=(phone_number, otp))
+    thread.start()
 
 class ApiOTPCheck(CreateAPIView):
 

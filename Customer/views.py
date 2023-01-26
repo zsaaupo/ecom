@@ -5,8 +5,6 @@ from rest_framework.utils import json
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED, HTTP_226_IM_USED, HTTP_406_NOT_ACCEPTABLE
 import random
 from threading import Thread
-from twilio.rest import Client
-
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from .models import Customer
@@ -74,18 +72,17 @@ class ApiSingUp(CreateAPIView):
             return Response(result)
 
 def send_otp(phone_number, otp):
-    bd_number = "+88"+phone_number
-    account_sid = 'ACa28db228afc04d77f2d594c828f0514e'
-    auth_token = '31392d0e47d75c67ba189fea473e7642'
-    client = Client(account_sid, auth_token)
+    import requests
 
-    message = client.messages.create(
-        messaging_service_sid='MGbc2f75ec5120f89401f2569562b535b3',
-        body=otp,
-        to=bd_number
-    )
+    url = "https://api.sms.net.bd/sendsms"
 
-    print(message.sid)
+    payload = {'api_key': '0F0T0PDo46h5HgX558r99PL9HdoNlxAdpu4pq8gh',
+               'msg': "your Mushroomyan OTP : "+str(otp),
+               'to': '88'+phone_number
+               }
+
+    response = requests.request("POST", url, data=payload)
+    return response
 
 
 def thread_send_otp(phone_number, otp):

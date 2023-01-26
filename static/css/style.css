@@ -1,6 +1,6 @@
 *{padding: 0; margin: auto}
 
-/*start of hear css*/
+/*start of header css*/
 
 .menu ul li{
 	position: relative;
@@ -19,6 +19,10 @@
 	float: right;
 }
 
+#name{
+  font-size: 30px
+}
+
 .headline{
 	font-family: Curlz MT;
 	font-size: 18px;
@@ -28,7 +32,7 @@
 	margin-top: 20px;
 }
 
-/*end of hear css*/
+/*end of header css*/
 
 
 /*text decoration for all <a> tag*/

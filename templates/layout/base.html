@@ -19,9 +19,11 @@
 </body>
 <script>
     if (localStorage.getItem('access')){
+        let name = localStorage.getItem('full_name')
         $('#SignOut').show()
         $('#SignIn').hide()
         $('#SignUp').hide()
+        $('#name').text(localStorage.getItem('full_name'))
     }
     else{
         $('#SignOut').hide()

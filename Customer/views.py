@@ -98,7 +98,7 @@ class ApiSingUp(CreateAPIView):
                 return Response(result)
 
         except Exception as ex:
-            result['message'] = str(ex)
+            result['massage'] = str(ex)
             return Response(result)
 
 
@@ -125,12 +125,12 @@ class ApiOTPCheck(CreateAPIView):
             user = User.objects.filter(username=data['phone_number']).first()
             if not user:
 
-                result['message'] = "Please create a account."
+                result['massage'] = "Please create a account."
                 return Response(result, status=HTTP_406_NOT_ACCEPTABLE)
 
             elif user.is_active:
 
-                result['message'] = "You already created account."
+                result['massage'] = "You already created account."
                 return Response(result, status=HTTP_226_IM_USED)
 
             else:
@@ -140,7 +140,7 @@ class ApiOTPCheck(CreateAPIView):
                     user.save()
                     customer.otp = ''
                     customer.save()
-                    result['message'] = "Success."
+                    result['massage'] = "Success."
                     result['status'] = HTTP_202_ACCEPTED
                     return Response(result)
 
@@ -148,11 +148,11 @@ class ApiOTPCheck(CreateAPIView):
 
                     result = {}
                     result['status'] = HTTP_400_BAD_REQUEST
-                    result['message'] = "OTP did not match."
+                    result['massage'] = "OTP did not match."
                     result['Error'] = "OTP"
                     return Response(result)
 
         except Exception as ex:
             result = {}
-            result['message'] = str(ex)
+            result['massage'] = str(ex)
             return Response(result)

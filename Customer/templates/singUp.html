@@ -188,7 +188,7 @@
 <div class="container" id='otp_check'>
     <div class="card">
         <h1 class="card_title">check your SMS</h1>
-        <form enctype="multipart/form-data" id="sign_up_form" class="card_form" method="POST">
+        <form enctype="multipart/form-data" id="otp_check_form" class="card_form" method="POST">
             {% csrf_token %}
             <div class="input">
                 <input type="text" id="otp" name="otp" class="input_field" required />
@@ -374,10 +374,37 @@
                 dataType: "json",
                 success: function(response){
                     if(response.status == 202){
-                        alert(response.massage);
+                        localStorage.setItem("phone_number", phone_number);
                         $('#before_otp_check').hide()
                         $('#otp_check').show()
                     }else{
+                        alert(response.massage);
+                    }
+                },
+                failure: function(response){
+                    alert("Error occured while signing up. Please try again later.");
+                }
+            });
+        });
+
+
+        $("#otp_check_form").submit(function(e){
+            e.preventDefault();
+            var otp = $("#otp").val();
+            var phone_number = localStorage.getItem('phone_number')
+            $.ajax({
+                type: 'PUT',
+                url: '/user/OTP_check_api/',
+                data: JSON.stringify({'phone_number': phone_number, 'otp': otp}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response){
+                    if(response.status == 202) {
+                        alert(response.massage);
+                        localStorage.removeItem("phone_number");
+                    } 
+                    else {
+                        // OTP verification failed
                         alert(response.massage);
                     }
                 },

@@ -1,17 +1,21 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.utils import json
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED, HTTP_226_IM_USED, HTTP_406_NOT_ACCEPTABLE
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED, HTTP_226_IM_USED, HTTP_406_NOT_ACCEPTABLE, HTTP_401_UNAUTHORIZED, HTTP_200_OK
 import random
 from threading import Thread
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from .models import Customer
 
 
-def sing_up(request):
-    return render(request, "singUp.html")
+def sign_up(request):
+    return render(request, "signUp.html")
+
+def sign_in(request):
+    return render(request, "signIn.html")
 
 
 
@@ -43,7 +47,7 @@ def thread_send_otp(phone_number, otp):
 # APIs
 
 
-class ApiSingUp(CreateAPIView):
+class ApiSignUp(CreateAPIView):
 
     permission_classes = []
 
@@ -155,4 +159,52 @@ class ApiOTPCheck(CreateAPIView):
         except Exception as ex:
             result = {}
             result['massage'] = str(ex)
+            return Response(result)
+
+
+class ApiLogIn(ListAPIView):
+
+    permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+        result = {}
+
+        try:
+            data = json.loads(request.body)
+            print(data)
+            if 'phone_number' not in data or data['phone_number'] == '':
+                result['message'] = "Email can not be null."
+                result['Error'] = "Email"
+                return Response(result, status=HTTP_400_BAD_REQUEST)
+
+            if 'password' not in data or data['password'] == '':
+                result['message'] = "Password can not be null."
+                result['Error'] = "Password"
+                return Response(result, status=HTTP_400_BAD_REQUEST)
+
+            user = User.objects.filter(username=data['phone_number']).first()
+            if not user:
+                result['message'] = "Please create a account."
+                return Response(result, status=HTTP_400_BAD_REQUEST)
+            elif not user.is_active:
+                result['message'] = "Please active your account."
+                return Response(result, status=HTTP_400_BAD_REQUEST)
+            else:
+                if not check_password(data['password'], user.password):
+                    result['message'] = "Wrong password"
+                    return Response(result, status=HTTP_401_UNAUTHORIZED)
+                else:
+                    customer = Customer.objects.filter(user=user).first()
+                    token = RefreshToken.for_user(user)
+                    data = {}
+                    data['user_name'] = user.username
+                    data['full_name'] = customer.full_name
+                    data['access'] = str(token.access_token)
+                    data['token'] = str(token)
+                    data['status'] = HTTP_200_OK
+
+                    return Response(data)
+
+        except Exception as e:
+            result['message'] = str(e)
             return Response(result)

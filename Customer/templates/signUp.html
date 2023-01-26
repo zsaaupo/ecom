@@ -360,6 +360,9 @@
 
 <script>
     $(document).ready(function(){
+        if(localStorage.getItem('access')){
+            window.location.href = '/';
+        }
         $('#otp_check').hide()
         $("#sign_up_form").submit(function(e){
             e.preventDefault();
@@ -400,8 +403,8 @@
                 dataType: "json",
                 success: function(response){
                     if(response.status == 202) {
-                        alert(response.massage);
                         localStorage.removeItem("phone_number");
+                        window.location.href = '/user/log_in';
                     } 
                     else {
                         // OTP verification failed

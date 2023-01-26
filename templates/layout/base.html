@@ -18,6 +18,18 @@
 {% include 'layout/footer.html' %}
 </body>
 <script>
-    $('#SignOut').hide()
+    if (localStorage.getItem('access')){
+        $('#SignOut').show()
+        $('#SignIn').hide()
+        $('#SignUp').hide()
+    }
+    else{
+        $('#SignOut').hide()
+    }
+    function signOut(){
+        localStorage.removeItem("full_name");
+        localStorage.removeItem("access");
+        window.location="/"
+    }
 </script>
 </html>

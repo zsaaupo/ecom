@@ -171,7 +171,6 @@ class ApiLogIn(ListAPIView):
 
         try:
             data = json.loads(request.body)
-            print(data)
             if 'phone_number' not in data or data['phone_number'] == '':
                 result['message'] = "Email can not be null."
                 result['Error'] = "Email"
@@ -206,5 +205,6 @@ class ApiLogIn(ListAPIView):
                     return Response(data)
 
         except Exception as e:
+            print("exp")
             result['message'] = str(e)
             return Response(result)

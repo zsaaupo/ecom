@@ -9,8 +9,38 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from .models import Customer
 
+
 def sing_up(request):
     return render(request, "singUp.html")
+
+
+
+
+# OTP sending by Phone number
+
+
+def send_otp(phone_number, otp):
+    import requests
+
+    url = "https://api.sms.net.bd/sendsms"
+
+    payload = {'api_key': '0F0T0PDo46h5HgX558r99PL9HdoNlxAdpu4pq8gh',
+               'msg': "your Mushroomyan OTP : "+str(otp),
+               'to': '88'+phone_number
+               }
+
+    response = requests.request("POST", url, data=payload)
+    return response
+
+
+def thread_send_otp(phone_number, otp):
+    thread = Thread(target=send_otp, args=(phone_number, otp))
+    thread.start()
+
+
+
+
+# APIs
 
 
 class ApiSingUp(CreateAPIView):
@@ -56,7 +86,7 @@ class ApiSingUp(CreateAPIView):
                 customer.otp = random_number
                 customer.save()
 
-                thread_send_otp(data['phone_number'], random_number)
+                # thread_send_otp(data['phone_number'], random_number)
 
                 result['status'] = HTTP_202_ACCEPTED
                 result['massage'] = "Success"
@@ -71,23 +101,6 @@ class ApiSingUp(CreateAPIView):
             result['message'] = str(ex)
             return Response(result)
 
-def send_otp(phone_number, otp):
-    import requests
-
-    url = "https://api.sms.net.bd/sendsms"
-
-    payload = {'api_key': '0F0T0PDo46h5HgX558r99PL9HdoNlxAdpu4pq8gh',
-               'msg': "your Mushroomyan OTP : "+str(otp),
-               'to': '88'+phone_number
-               }
-
-    response = requests.request("POST", url, data=payload)
-    return response
-
-
-def thread_send_otp(phone_number, otp):
-    thread = Thread(target=send_otp, args=(phone_number, otp))
-    thread.start()
 
 class ApiOTPCheck(CreateAPIView):
 

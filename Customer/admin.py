@@ -6,6 +6,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = [
         "user",
         "full_name",
+        "email",
         "phone_number"
     ]
 

@@ -11,6 +11,10 @@
                 <label for="full_name" class="input_label">Full name</label>
             </div>
             <div class="input">
+                <input type="email" id="email" name="email" class="input_field" required />
+                <label for="email" class="input_label">Email</label>
+            </div>
+            <div class="input">
                 <input type="text" id="phone_number" name="phone_number" class="input_field" required />
                 <label for="phone_number" class="input_label">Phone Number</label>
             </div>
@@ -367,12 +371,13 @@
         $("#sign_up_form").submit(function(e){
             e.preventDefault();
             var full_name = $("#full_name").val();
+            var email = $("#email").val();
             var phone_number = $("#phone_number").val();
             var password = $("#password").val();
             $.ajax({
                 type: "POST",
                 url: "/user/sign_up_api/",
-                data: JSON.stringify({'full_name': full_name, 'phone_number': phone_number, 'password': password}),
+                data: JSON.stringify({'full_name': full_name, 'email': email, 'phone_number': phone_number, 'password': password}),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response){
@@ -398,14 +403,14 @@
             $.ajax({
                 type: 'PUT',
                 url: '/user/OTP_check_api/',
-                data: JSON.stringify({'phone_number': phone_number, 'otp': otp}),
+                data: JSON.stringify({'phone_number': phone_number, 'otp': otp,}),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response){
                     if(response.status == 202) {
                         localStorage.removeItem("phone_number");
                         window.location.href = '/user/log_in';
-                    } 
+                    }
                     else {
                         // OTP verification failed
                         alert(response.massage);

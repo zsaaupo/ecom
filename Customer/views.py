@@ -10,6 +10,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Customer
 
+# email imports
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def sign_up(request):
     return render(request, "signUp.html")
@@ -43,6 +47,57 @@ def thread_send_otp(phone_number, otp):
 
 
 
+# OTP send by email
+
+
+def send_mail(to, subject, body):
+
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = '465'
+    sender_email = 'mushroomyan01@gmail.com'
+    sender_password = 'fjjvrpvxrrubkbsg'
+    server = None
+
+    try:
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.ehlo()
+        server.login(sender_email, sender_password)
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = to
+        msg['Subject'] = subject
+
+
+        html = """\
+        <html>
+            <head></head>
+            <body>
+        """
+        html += body.replace('\r\n', '<br/>\r\n')
+        """
+            </body>
+        </html>
+        """
+        msg.attach(MIMEText(html, 'html'))
+        server.sendmail(
+            from_addr=sender_email,
+            to_addrs=to,
+            msg=msg.as_string())
+        print("Mail Send")
+    except Exception as ex:
+        print(str(ex))
+    finally:
+        if server != None:
+            server.quit()
+
+
+def thread_send_email(to, subject, body):
+
+    thread = Thread(target=send_mail, args=(to, subject, body))
+    thread.start()
+
+
+
 
 # APIs
 
@@ -61,6 +116,10 @@ class ApiSignUp(CreateAPIView):
             if 'full_name' not in data or data['full_name'] == '':
                 result['massage'] = "Name can not be null."
                 result['error'] = "Full name"
+                return Response(result, status=HTTP_400_BAD_REQUEST)
+            if 'email' not in data or data['email'] == '':
+                result['massage'] = "Email can not be null."
+                result['error'] = "Email"
                 return Response(result, status=HTTP_400_BAD_REQUEST)
             if 'phone_number' not in data or data['phone_number'] == '':
                 result['massage'] = "Phone number can not be null."
@@ -85,16 +144,19 @@ class ApiSignUp(CreateAPIView):
                 random_number = random.randint(000000, 999999)
                 customer = Customer()
                 customer.full_name = data['full_name']
+                customer.email = data['email']
                 customer.phone_number = data['phone_number']
                 customer.user = user
                 customer.otp = random_number
                 customer.save()
 
                 # thread_send_otp(data['phone_number'], random_number)
+                thread_send_email(data['email'], 'your OTP', 'OTP : '+str(random_number))
 
                 result['status'] = HTTP_202_ACCEPTED
                 result['massage'] = "Success"
                 result['phone_number'] = data['phone_number']
+                result['email'] = data['email']
                 return Response(result)
             else:
                 result['status'] = HTTP_226_IM_USED

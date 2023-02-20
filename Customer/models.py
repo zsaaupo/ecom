@@ -5,6 +5,7 @@ class Customer(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     full_name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=11)
     otp = models.CharField(max_length=6, null=True, blank=True)
 

@@ -1,17 +1,26 @@
 *{padding: 0; margin: auto}
 
+body{
+  background-color: #00FFAB;
+
+}
 /*start of header css*/
 
+.menu ul{
+  position: relative;
+}
 .menu ul li{
 	position: relative;
 	display: inline-block;
-	padding: 20px;
+	margin: 20px;
 }
 
 .menu ul li a{
 	text-decoration: none;
-	color: black;
+	color: white;
 	font-size: 20px;
+  text-shadow: 2px 2px 7px black;
+  padding: 3px;
 }
 
 .menu{
@@ -24,15 +33,46 @@
 }
 
 .headline{
-	font-family: Curlz MT;
-	font-size: 18px;
+	font-family: 'Mystery Quest', cursive;
 	float: left;
 	display: inline-block;
 	margin-left: 60px;
 	margin-top: 20px;
 }
 
+.headline h1 a{
+  color: white;
+  text-shadow: 10px 7px 12px black;
+}
+
 /*end of header css*/
+
+
+/* Hover start */
+
+.menu ul li a:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.menu ul li a:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.menu ul li a:active {
+  text-shadow: none;
+}
+
+/*Hover end*/
 
 
 /*text decoration for all <a> tag*/
@@ -41,6 +81,7 @@ a{
 	color: black;
 }
 /* end of text decoration for all <a> tag*/
+
 
 /*start of footer css*/
 

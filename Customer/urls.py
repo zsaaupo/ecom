@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import sign_up, sign_in, ApiSignUp, ApiOTPCheck, ApiLogIn
+from .views import sign_up, sign_in, verify_email, ApiSignUp, ApiOTPCheck, ApiLogIn
 
 urlpatterns = [
     path('join', sign_up),
     path('log_in', sign_in),
+    path('verify_email/<str:OTP>/<str:user_name>/', verify_email),
 
     #API
     path('sign_up_api/', ApiSignUp.as_view()),

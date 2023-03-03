@@ -21,6 +21,9 @@ def sign_up(request):
 def sign_in(request):
     return render(request, "signIn.html")
 
+def verify_email(request, OTP, user_name):
+    return render(request, "verifyEmail.html")
+
 
 
 
@@ -151,7 +154,7 @@ class ApiSignUp(CreateAPIView):
                 customer.save()
 
                 # thread_send_otp(data['phone_number'], random_number)
-                thread_send_email(data['email'], 'your OTP', 'OTP : '+str(random_number))
+                thread_send_email(data['email'], 'your OTP', 'OTP : '+str(random_number)+" \n or \nclick this link 127.0.0.1:8000/user/verify_email/"+str(random_number)+"/"+str(data['phone_number']))
 
                 result['status'] = HTTP_202_ACCEPTED
                 result['massage'] = "Success"

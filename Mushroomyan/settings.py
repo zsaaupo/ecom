@@ -1,5 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -110,6 +111,10 @@ USE_TZ = True
 
 STATICFILES_DIRS = [BASE_DIR / "static"]  # added for load static css file
 STATIC_URL = 'static/'
+
+# media setting
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = '/media/'
 
 
 # Default primary key field type

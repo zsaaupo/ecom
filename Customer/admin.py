@@ -10,4 +10,9 @@ class CustomerAdmin(admin.ModelAdmin):
         "phone_number"
     ]
 
+    readonly_fields = [
+        "slug",
+        "otp"
+    ]
+
 admin.site.register(Customer, CustomerAdmin)

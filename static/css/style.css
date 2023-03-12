@@ -160,6 +160,8 @@ a{
 .product-image{
   height: auto;
   width: 120%;
+}product{
+  float: left;
 }
 
 .card-container h2{
@@ -173,6 +175,52 @@ a{
 }
 
 /*end of pointer card*/
+
+
+
+
+/*start order*/
+
+#order-card{
+
+  position: relative;
+  left: 10%;
+}
+
+
+#form{
+  border-radius: 25px;
+  position: absolute;
+  right: 15%;
+  bottom: 150px;
+  display: inline-block;
+  background-color: white;
+  height: 650px;
+  width: 350px;
+}
+
+#form label{
+  display: block;
+  padding: 50px 20px 50px 20px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 22px;
+}
+
+#quantity{
+  position: absolute;
+  left: 32%;
+  top: 30%;
+  width: 30px;
+  height: 25px;
+}
+
+#submit{
+  position: absolute;
+  top: 500px;
+  left: 20px;
+  padding: 16px 50px 16px 50px;
+}
+/*end order*/
 
 
 

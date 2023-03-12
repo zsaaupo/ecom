@@ -1,0 +1,52 @@
+{% extends 'layout/base.html' %}
+{% block title %} Mushroomyan {% endblock %}
+{% block body %} 
+
+<div>
+    <div id="product"></div>
+    <div id="form">
+        <label id="delivery">Delivery charge inside Dhaka</label>
+        <label>Quantity</label>
+        <input id="quantity" type="number" min="1" max="3" step="1">
+        <label id="total_price"></label>
+        <button class="button-30" id="submit" type="submit">Confirm Order</button>
+
+    </div>
+</div>
+
+<script>
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/product_api",
+        dataType: "json",
+        success: function(response) {
+            $.each(response, function(index, product) {
+                $('#product').html(`
+                    <div class="product-card" id="order-card">
+                        <img class="product-image" src="${product.product_image}" alt="${product.product_name}" />
+                        <div class="card-container">
+                            <h2>${product.product_name}</h2>
+                            <p>${product.product_description} : <span id="product_price">${product.product_price}</span> Tk</p>
+                        </div>
+                    </div>
+                `);
+                $('#delivery').append(`
+                    ${product.delivery_charge} Tk
+                `);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+
+    $('#quantity').on('input', function() {
+        var quantity = $(this).val();
+        var price = parseFloat($('#product_price').text());
+        var delivery = parseFloat($('#delivery').text().match(/\d+/));
+        var sub_total = quantity * price;
+        var total = sub_total + delivery;
+        $('#total_price').html(`Total ${total} Tk`);
+    });
+</script>
+{% endblock %}

@@ -4,8 +4,14 @@ from rest_framework.response import Response
 from .serializers import ProductSerializer
 from .models import Product
 
+
 def landin_page(request):
     return render(request, "index.html")
+
+
+def order(request):
+    return render(request, "order.html")
+
 
 class ProductApi(ListAPIView):
 

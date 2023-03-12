@@ -6,6 +6,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = [
         "product_name",
         "product_image",
+        "product_price",
+        "delivery_charge",
         "product_description"
     ]
 
@@ -18,8 +20,7 @@ class OrderAdmit(admin.ModelAdmin):
         "order_number",
         "customer",
         "kg",
-        "delivery_charge",
-        "price"
+        "total_price"
     ]
 
 admin.site.register(Order,OrderAdmit)

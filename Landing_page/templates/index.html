@@ -1,6 +1,35 @@
 {% extends 'layout/base.html' %}
 {% block title %} Mushroomyan {% endblock %}
 {% block body %} 
-<h1>Mushroomyan</h1>
+<h1 id="body-headline">Welcome to Mushroomyan</h1>
 
+<div class="product">
+	<div class="product-space"></div>
+	<button class="button-30" role="button">Buy Now</button>
+
+</div>	
+
+<script>
+	$.ajax({
+		type: "GET",
+		url: "http://127.0.0.1:8000/product_api",
+		dataType: "json",
+		success: function(response) {
+			$.each(response, function(index, product) {
+				$('.product-space').append(`
+					<div class="product-card">
+						<img class="product-image" src="${product.product_image}" alt="${product.product_name}" />
+						<div class="card-container">
+						<h2>${product.product_name}</h2>
+						<p>${product.product_description} : ${product.product_price} Tk</p>
+						</div>
+					</div>
+				`);
+			});
+		},
+		error: function(xhr, status, error) {
+			console.log(error);
+		}
+	});
+</script>
 {% endblock %}

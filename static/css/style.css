@@ -4,6 +4,10 @@ body{
   background-color: #00FFAB;
 
 }
+
+
+
+
 /*start of header css*/
 
 .menu ul{
@@ -48,6 +52,8 @@ body{
 /*end of header css*/
 
 
+
+
 /* Hover start */
 
 .menu ul li a:after {
@@ -75,12 +81,32 @@ body{
 /*Hover end*/
 
 
+
+
 /*text decoration for all <a> tag*/
+
 a{
 	text-decoration: none;
 	color: black;
 }
+
 /* end of text decoration for all <a> tag*/
+
+
+
+
+/*start of headline*/
+
+#body-headline{
+  font-family: 'Noto Sans' sans-serif; 
+  color: white;
+  text-align: center; 
+  text-shadow: 2px 2px 7px black;
+}
+
+/*end of headline*/
+
+
 
 
 /*start of footer css*/
@@ -92,6 +118,129 @@ a{
 
 /*end of footer css*/
 
+
+
+
+/*start of product card*/
+
+.product-space{
+  display: inline-block;
+}
+.product {
+  text-align: center;
+}
+
+.product-card {
+  display: inline-block;
+  position: relative;
+  right: 17%;
+  margin-top: 100px;
+  border-radius: 25px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 30%;
+  margin: 50px;
+}
+
+.product-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.card-container {
+  border-radius: 25px;
+  background-color: white;
+  padding: 20px;
+  text-align: left;
+}
+
+.product-image{
+  height: auto;
+  width: 120%;
+}
+
+.card-container h2{
+  font-family: 'Open Sans', sans-serif;
+}
+
+.card-container p{
+  margin-top: 20px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 22px;
+}
+
+/*.product-card h2{
+  display: block;
+  position: relative;
+  bottom: 200px;
+  left: 20px;
+  float: left;
+}
+
+.product-card p{
+  display: block;
+  position: relative;
+  float: left;
+  bottom: 150px;
+}*/
+
+/*end of pointer card*/
+
+/*start button*/
+
+
+.button-30 {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-block;
+  font-family: font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  height: 65px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding: 16px 75px 16px 75px;
+  position: relative;
+  bottom: 150px;
+  left: 15%;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 30px;
+}
+
+.button-30:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.button-30:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-30:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+/*end button*/
+
+
+
+
+/*start of fish*/
 
 @import url(https://fonts.googleapis.com/css?family=Oswald|Roboto);
 @-webkit-keyframes btn {
@@ -371,3 +520,5 @@ a{
   height: 50px;
   fill: #fff;
 }
+
+/*end of fish*/

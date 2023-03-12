@@ -1,5 +1,5 @@
 from django.db import models
-
+from Customer.models import Customer
 class Product(models.Model):
 
     product_name = models.CharField(max_length=50)
@@ -9,3 +9,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+
+class Order(models.Model):
+
+    order_number = models.CharField(max_length=6)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    kg = models.PositiveIntegerField()
+    delivery_charge = models.PositiveIntegerField()
+    price = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.order_number

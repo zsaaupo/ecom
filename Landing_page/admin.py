@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product
+from .models import Product, Order
 
 class ProductAdmin(admin.ModelAdmin):
 
@@ -10,3 +10,16 @@ class ProductAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(Product,ProductAdmin)
+
+
+class OrderAdmit(admin.ModelAdmin):
+
+    list_display = [
+        "order_number",
+        "customer",
+        "kg",
+        "delivery_charge",
+        "price"
+    ]
+
+admin.site.register(Order,OrderAdmit)

@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_unused_media',
+    'django_unused_media',  # use this command for images: python manage.py cleanup_unused_media -e *.css -e .gitignore
     'rest_framework',
     'Landing_page',
     'Customer',

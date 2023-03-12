@@ -2,10 +2,7 @@
 
 body{
   background-color: #00FFAB;
-
 }
-
-
 
 
 /*start of header css*/
@@ -56,6 +53,10 @@ body{
 
 /* Hover start */
 
+.menu ul li a{
+    font-family: 'Noto Sans', sans-serif;
+}
+
 .menu ul li a:after {
   content: '';
   position: absolute;
@@ -98,6 +99,7 @@ a{
 /*start of headline*/
 
 #body-headline{
+  font-family: 'Noto Sans', sans-serif;
   color: white;
   text-align: center; 
   text-shadow: 2px 2px 7px black;

@@ -7,8 +7,10 @@ from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED, HTTP_
 import random
 from threading import Thread
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Customer
+from .seriallizer import CustomarSerializer
 
 # email imports
 import smtplib
@@ -273,3 +275,13 @@ class ApiLogIn(ListAPIView):
             print("exp")
             result['message'] = str(e)
             return Response(result)
+
+class CustomarDetailsApi(ListAPIView):
+
+    premission_class = [IsAuthenticated]
+
+    def get(self, request, slug):
+
+        customer_data = Customer.objects.filter(slug=slug).first()
+        customer_data = CustomarSerializer(customer_data).data
+        return Response(customer_data)
